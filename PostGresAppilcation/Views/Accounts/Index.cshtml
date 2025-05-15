@@ -1,0 +1,31 @@
+﻿@model List<PostGresAppilcation.Models.ClaimViewModel>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>This is secure page</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Accounts" asp-action="Logout" method="post" style="display:inline">
+        <button type="submit" class="btn btn-link">Logout</button>
+    </form>
+}
+
+<table class="table border">
+    <thead>
+        <tr>
+            <th>Claim Type</th>
+            <th>Claim Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var claim in Model)
+        {
+            <tr>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
