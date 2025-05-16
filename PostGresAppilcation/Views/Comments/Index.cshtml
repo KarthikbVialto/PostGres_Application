@@ -1,0 +1,36 @@
+﻿@using System.Security.Claims
+@model List<PostGresAppilcation.Models.Comment>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2>Comments</h2>
+<form asp-controller="Comments" asp-action="Create" method="post">
+    <textarea name="text" class="form-control" rows="3"></textarea>
+    <div style="display:flex" class="justify-content-end mt-3 mb-3" >
+        <button type="submit" class="btn btn-primary">Post</button>
+    </div>
+</form>
+
+@foreach(var comment in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">
+            <strong>@comment.UserName</strong> on @comment.CreatedAt.ToLocalTime();
+        </h6>
+        <p class="card-text">@comment.Text</p>
+
+        @if (User.Identity.IsAuthenticated && User.FindFirst(ClaimTypes.NameIdentifier)?.Value == comment.UserId)
+        {
+           <form asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" method="get" style="display:inline">
+               <div class="justify-content-end mt-3 mb-3" style="display:flex">
+                    <button type="submit" class="btn btn-outline-secondary">Edit</button>
+               </div>
+           </form>
+        }
+        </div>
+    </div>
+}
