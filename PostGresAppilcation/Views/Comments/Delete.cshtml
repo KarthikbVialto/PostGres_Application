@@ -1,0 +1,9 @@
+﻿@model PostGresAppilcation.Models.Comment
+@{
+}
+<h2>Delete Comment</h2>
+<form asp-controller="Comments" asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.Id"/>
+    <textarea name="text" rows="3" class="form-control">@Model.Text</textarea>
+    <button type="submit" class="btn btn-danger mt-3">Delete</button>
+</form>

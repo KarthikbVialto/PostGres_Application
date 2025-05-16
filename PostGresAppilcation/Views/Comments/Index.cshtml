@@ -25,12 +25,21 @@
 
         @if (User.Identity.IsAuthenticated && User.FindFirst(ClaimTypes.NameIdentifier)?.Value == comment.UserId)
         {
-           <form asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" method="get" style="display:inline">
-               <div class="justify-content-end mt-3 mb-3" style="display:flex">
+           <div class="d-flex justify-content-end mt-2 gap-2">
+            <form asp-controller="Comments" asp-action="Edit" asp-route-id="@comment.Id" method="get" style="display:inline">
+               <div class="justify-content-end mt-3 mb-3">
                     <button type="submit" class="btn btn-outline-secondary">Edit</button>
                </div>
            </form>
+                
+           <form asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id" method="post" style="display:inline">
+                    <div class="justify-content-end mt-3 mb-3">
+                        <button type="submit" class="btn btn-outline-secondary">Delete</button>
+                    </div>
+           </form>
+           </div>
         }
         </div>
+
     </div>
 }

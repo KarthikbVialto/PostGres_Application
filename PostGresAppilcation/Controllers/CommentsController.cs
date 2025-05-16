@@ -27,8 +27,7 @@ namespace PostGresAppilcation.Controllers
         public async Task<IActionResult> Create(string text)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            //Console.WriteLine(userId);
-            //Console.WriteLine();
+            
             if (string.IsNullOrEmpty(userId))
             {
                 return Forbid();
@@ -40,8 +39,7 @@ namespace PostGresAppilcation.Controllers
                 CreatedAt = DateTime.UtcNow,
                 UserName = User.Identity?.Name ?? User.FindFirst("preferred_username")?.Value ?? "Unknown"
             };
-            //Console.WriteLine($"Userid:{comment.UserId}");
-            //Console.WriteLine($"Userid:{comment.UserName}");
+           
             await dbContext.Comments.AddAsync(comment);
             await dbContext.SaveChangesAsync();
 
@@ -70,12 +68,38 @@ namespace PostGresAppilcation.Controllers
             {
                 return Forbid();
             }
-
+            if (string.IsNullOrEmpty(text))
+            {
+                return RedirectToAction("Index", "Comments");
+            }
             comment.Text = text;
             comment.CreatedAt = DateTime.UtcNow;
             await dbContext.SaveChangesAsync();
 
             return RedirectToAction("Index");
+        }
+
+        //[HttpGet]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    var comment = await dbContext.Comments.FindAsync(id);
+        //    if(comment ==null || comment.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+        //    {
+        //        return Forbid();
+        //    }
+        //    return View(comment);
+        //}
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var comment = await dbContext.Comments.FindAsync(id);
+            if (comment == null || comment.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
+            {
+                return Forbid();
+            }
+            dbContext.Comments.Remove(comment);
+            await dbContext.SaveChangesAsync();
+            return RedirectToAction("Index", "Comments");
         }
     }
 }
