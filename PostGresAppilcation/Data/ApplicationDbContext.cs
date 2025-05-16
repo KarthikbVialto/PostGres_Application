@@ -12,5 +12,6 @@ namespace PostGresAppilcation.Data
         }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

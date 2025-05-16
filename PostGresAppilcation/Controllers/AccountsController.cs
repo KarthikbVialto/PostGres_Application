@@ -17,6 +17,7 @@ namespace PostGresAppilcation.Controllers
             return View(claims);
         }
 
+        [HttpPost]
         public IActionResult Logout()
         {
             return SignOut(new AuthenticationProperties

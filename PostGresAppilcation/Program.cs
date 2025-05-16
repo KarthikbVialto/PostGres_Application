@@ -27,6 +27,12 @@ builder.Services.AddAuthentication(options =>
         options.RequireHttpsMetadata = false;
         options.Scope.Add("openid");
         options.Scope.Add("profile");
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = "preferred_username",
+            RoleClaimType = "roles"
+        };
     });
 
 

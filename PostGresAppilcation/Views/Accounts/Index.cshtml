@@ -1,18 +1,22 @@
-﻿@model List<PostGresAppilcation.Models.ClaimViewModel>
+﻿@using  System.Security.Claims;
+@model List<PostGresAppilcation.Models.ClaimViewModel>
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-<h1>This is secure page</h1>
+
 @if (User.Identity.IsAuthenticated)
 {
-    <form asp-controller="Accounts" asp-action="Logout" method="post" style="display:inline">
-        <button type="submit" class="btn btn-link">Logout</button>
-    </form>
+    <div style="display:flex" class="justify-content-between align-items-center mb-3">
+        <h3><strong>Welcome! </strong> @User.Identity?.Name.ToUpper()</h3>
+        <form asp-controller="Accounts" asp-action="Logout" method="post" style="display:flex" class="mb-2">
+            <button type="submit" class="btn btn-danger" style="display:inline">Logout</button>
+        </form>
+    </div>
 }
 
-<table class="table border">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Claim Type</th>
