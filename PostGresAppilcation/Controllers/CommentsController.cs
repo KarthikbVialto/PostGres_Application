@@ -79,16 +79,6 @@ namespace PostGresAppilcation.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var comment = await dbContext.Comments.FindAsync(id);
-        //    if(comment ==null || comment.UserId != User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
-        //    {
-        //        return Forbid();
-        //    }
-        //    return View(comment);
-        //}
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
